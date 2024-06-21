@@ -5,3 +5,8 @@
         /* color: #ee9c05; */
     }
 }
+
+.blog-details img{
+    display: block;
+    margin: auto;
+}
