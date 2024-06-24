@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from blog.models import Blog
+from patient.models import HeartVital
 
 class BlogForm(ModelForm):
     class Meta:
@@ -14,3 +15,10 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', "last_name", "username", "email", "password1", "password2"]
+
+
+class HeartVitalForm(ModelForm):
+    class Meta:
+        model = HeartVital
+        # fields = '__all__'
+        exclude = ['user', 'heart_disease', 'prediction_probability']

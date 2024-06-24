@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
+from patient.form import HeartVitalForm
+
 # from django.contrib.auth.forms import UserCreationForm
 # from patient.form import BlogForm, CustomUserCreationForm
 
@@ -56,3 +58,12 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect('home')
+
+def take_a_test(request):
+    form = HeartVitalForm()
+
+    context = {
+        'form' : form
+    }
+    
+    return render(request, 'patient/take_a_test.html', context)
