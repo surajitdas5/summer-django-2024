@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
-from patient.models import HeartVital, Appointment
+from patient.models import HeartVital, Appointment, Visit, Patient
 from patient.form import HeartVitalForm
 from patient.predict import predict_heart_disease
 
@@ -148,3 +148,17 @@ def update_appointment(request, aid):
         'appointment': app
     }
     return render(request, 'patient/appointment_update.html', context)
+
+
+def profile(request):
+    heart_vitals = HeartVital.objects.filter(user=request.user)
+    visits = {}
+    if Patient.objects.filter(patient=request.user).exists():
+        patient = Patient.objects.get(patient=request.user)
+        visits = Visit.objects.filter(patient=patient)
+
+    context = {
+        'heart_vitals': heart_vitals,
+        'visits': visits
+    }
+    return render(request, 'patient/profile.html', context)
